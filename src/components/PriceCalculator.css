@@ -1,0 +1,339 @@
+.calculator-section {
+  padding: 100px 0;
+  position: relative;
+}
+
+.calculator-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 40px;
+  align-items: start;
+  text-align: left;
+}
+
+.calc-controls {
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.calc-heading {
+  font-size: 1.3rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 16px;
+  margin-bottom: 8px;
+}
+
+.control-group-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.control-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-glow);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Service Tab Selectors */
+.service-tabs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.service-tab-btn {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 12px 16px;
+  border-radius: 12px;
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.service-tab-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-glow);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.service-tab-btn.active {
+  background: rgba(185, 39, 252, 0.1);
+  border-color: var(--neon-purple);
+  color: var(--neon-purple);
+  box-shadow: 0 0 12px rgba(185, 39, 252, 0.2);
+}
+
+/* Range Sliders */
+.slider-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.slider-value {
+  font-family: monospace;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.calc-range-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+}
+
+.calc-range-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--neon-cyan);
+  box-shadow: 0 0 8px var(--neon-cyan);
+  transition: transform 0.2s ease;
+}
+
+.calc-range-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+.calc-range-slider:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.slider-limits {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: -4px;
+}
+
+/* Addons Checklist */
+.addons-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.addon-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 20px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.addon-checkbox-label:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.addon-checkbox-label.checked {
+  background: rgba(0, 242, 254, 0.03);
+  border-color: var(--border-neon-hover);
+}
+
+.addon-checkbox-label input {
+  display: none;
+}
+
+.checkbox-ui {
+  width: 18px;
+  height: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--neon-cyan);
+  background: rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.addon-checkbox-label.checked .checkbox-ui {
+  border-color: var(--neon-cyan);
+  box-shadow: 0 0 8px rgba(0, 242, 254, 0.3);
+}
+
+.addon-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.addon-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-glow);
+}
+
+.addon-desc {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.addon-checkbox-label[disabled] {
+  opacity: 0.3;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Billing Card Result */
+.calc-result-card {
+  padding: 40px;
+  background: rgba(10, 14, 28, 0.85);
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.result-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 20px;
+  margin-bottom: 24px;
+}
+
+.package-tag {
+  font-family: monospace;
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  color: var(--neon-purple);
+  font-weight: 700;
+}
+
+.result-card-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+.price-display-wrapper {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 24px;
+  border-radius: 16px;
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+.price-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.price-value {
+  font-size: 2.1rem;
+  font-weight: 800;
+  font-family: var(--font-headings);
+  letter-spacing: -0.5px;
+}
+
+.package-breakdown {
+  margin-bottom: 32px;
+}
+
+.breakdown-heading {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-glow);
+  margin-bottom: 16px;
+}
+
+.breakdown-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.breakdown-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.9rem;
+  color: var(--text-main);
+}
+
+.item-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.item-dot.cyan { background-color: var(--neon-cyan); box-shadow: 0 0 6px var(--neon-cyan); }
+.item-dot.purple { background-color: var(--neon-purple); box-shadow: 0 0 6px var(--neon-purple); }
+.item-dot.pink { background-color: var(--neon-pink); box-shadow: 0 0 6px var(--neon-pink); }
+
+.btn-block {
+  width: 100%;
+  justify-content: center;
+}
+
+.calc-book-btn {
+  padding: 16px;
+  font-size: 1rem;
+}
+
+.calc-card-note {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 16px;
+  text-align: center;
+  line-height: 1.4;
+}
+
+@media (max-width: 992px) {
+  .calculator-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
+
+@media (max-width: 576px) {
+  .calc-controls {
+    padding: 24px;
+  }
+  
+  .service-tabs {
+    grid-template-columns: 1fr;
+  }
+  
+  .calc-result-card {
+    padding: 24px;
+  }
+  
+  .price-value {
+    font-size: 1.8rem;
+  }
+}
