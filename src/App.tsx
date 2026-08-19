@@ -9,8 +9,9 @@ import PriceCalculator from './components/PriceCalculator';
 import GearSection from './components/GearSection';
 import BookingForm from './components/BookingForm';
 import AdminLoginModal from './components/AdminLoginModal';
-import AdminPanelModal from './components/AdminPanelModal';
+import AdminPanel from './components/AdminPanel';
 import { Send, Mail, Phone, MapPin, Film, ShieldCheck } from 'lucide-react';
+import { getSiteData, saveSiteData } from './utils/db';
 import './App.css';
 
 // Default static content which gets loaded if LocalStorage is empty
@@ -252,24 +253,40 @@ const App: React.FC = () => {
 
   // Admin Portal state bindings
   const [isAdminLoginOpen, setIsAdminLoginOpen] = useState(false);
-  const [isAdminPanelOpen, setIsAdminPanelOpen] = useState(false);
+  const [isAdminActive, setIsAdminActive] = useState(false);
 
-  // Content Store synced with LocalStorage
-  const [siteData, setSiteData] = useState(() => {
-    const saved = localStorage.getItem('joshqinbek_studio_data');
-    if (saved) {
-      try {
-        return JSON.parse(saved);
-      } catch (e) {
-        return INITIAL_DATA;
+  // Content Store synced with IndexedDB (IndexedDB has no 5MB limit like LocalStorage)
+  const [siteData, setSiteData] = useState<any>(INITIAL_DATA);
+
+  React.useEffect(() => {
+    const loadData = async () => {
+      const data = await getSiteData();
+      if (data) {
+        setSiteData(data);
+      } else {
+        // Migration check: check if LocalStorage has data
+        const saved = localStorage.getItem('joshqinbek_studio_data');
+        if (saved) {
+          try {
+            const parsed = JSON.parse(saved);
+            setSiteData(parsed);
+            await saveSiteData(parsed);
+          } catch (e) {}
+        } else {
+          // Initialize DB with initial data
+          await saveSiteData(INITIAL_DATA);
+        }
       }
-    }
-    return INITIAL_DATA;
-  });
+    };
+    loadData();
+  }, []);
 
-  const handleSaveSiteData = (updatedData: any) => {
+  const handleSaveSiteData = async (updatedData: any) => {
     setSiteData(updatedData);
-    localStorage.setItem('joshqinbek_studio_data', JSON.stringify(updatedData));
+    await saveSiteData(updatedData);
+    try {
+      localStorage.setItem('joshqinbek_studio_data', JSON.stringify(updatedData));
+    } catch (e) {}
   };
 
   const handlePackageSelected = (summary: string, price: string) => {
@@ -281,6 +298,16 @@ const App: React.FC = () => {
     setSelectedPackage('');
     setSelectedPrice('');
   };
+
+  if (isAdminActive) {
+    return (
+      <AdminPanel 
+        data={siteData}
+        onSave={handleSaveSiteData}
+        onLogout={() => setIsAdminActive(false)}
+      />
+    );
+  }
 
   return (
     <>
@@ -336,15 +363,9 @@ const App: React.FC = () => {
       <AdminLoginModal 
         isOpen={isAdminLoginOpen}
         onClose={() => setIsAdminLoginOpen(false)}
-        onLoginSuccess={() => setIsAdminPanelOpen(true)}
+        onLoginSuccess={() => setIsAdminActive(true)}
       />
 
-      <AdminPanelModal 
-        isOpen={isAdminPanelOpen}
-        onClose={() => setIsAdminPanelOpen(false)}
-        data={siteData}
-        onSave={handleSaveSiteData}
-      />
 
       {/* Modern Futuristic Footer */}
       <footer className="footer-section">
